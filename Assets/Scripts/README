@@ -1,0 +1,6 @@
+controls
+
+WASD = swim
+Space = swim up
+Left Shift = swim down
+Left mouse button = scrape barnacles

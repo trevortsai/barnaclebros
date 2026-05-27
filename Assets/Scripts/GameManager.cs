@@ -4,8 +4,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    public int totalBarnacles;
+    private int totalBarnacles;
     private int removedBarnacles = 0;
 
     public Slider progressBar;
@@ -18,6 +17,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        totalBarnacles = FindObjectsByType<Barnacle>(
+            FindObjectsSortMode.None
+        ).Length;
+
+        Debug.Log("Barnacles found: " + totalBarnacles);
+
         progressBar.maxValue = totalBarnacles;
         progressBar.value = 0;
 

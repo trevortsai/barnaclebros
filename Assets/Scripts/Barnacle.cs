@@ -41,7 +41,6 @@ public class Barnacle : MonoBehaviour
         if (rb != null)
         {
             rb.isKinematic = false;
-           // rb.useGravity = false;
             rb.linearVelocity = Vector3.down * 0.5f;
             rb.linearDamping = 2f;
             rb.angularDamping = 2f;

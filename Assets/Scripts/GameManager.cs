@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     private int removedBarnacles = 0;
 
     public Slider progressBar;
+    public TMP_Text counterText;
     public GameObject winScreen;
 
     void Awake()
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour
         progressBar.maxValue = totalBarnacles;
         progressBar.value = 0;
 
+        UpdateCounter();
+
         winScreen.SetActive(false);
     }
 
@@ -35,9 +39,19 @@ public class GameManager : MonoBehaviour
 
         progressBar.value = removedBarnacles;
 
+        UpdateCounter();
+
         if (removedBarnacles >= totalBarnacles)
         {
             WinGame();
+        }
+    }
+
+    void UpdateCounter()
+    {
+        if (counterText != null)
+        {
+            counterText.text = removedBarnacles + " / " + totalBarnacles;
         }
     }
 

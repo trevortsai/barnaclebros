@@ -6,7 +6,7 @@ public class ScraperTouch : MonoBehaviour
     {
         Barnacle barnacle = other.GetComponent<Barnacle>();
 
-        if (barnacle != null)
+        if (barnacle != null && !barnacle.IsRemoved())
         {
             barnacle.PopOff();
         }

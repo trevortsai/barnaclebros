@@ -34,10 +34,6 @@ public class Barnacle : MonoBehaviour
 
     public void PopOff()
     {
-        removed = true;
-
-        GameManager.instance.BarnacleRemoved();
-
         if (rb != null)
         {
             rb.isKinematic = false;
@@ -46,6 +42,19 @@ public class Barnacle : MonoBehaviour
             rb.angularDamping = 2f;
         }
 
-        Destroy(gameObject, 5f);
+        if (removed) return;
+
+        removed = true;
+
+        Debug.Log("PopOff: " + gameObject.name, gameObject);
+
+        GameManager.instance.BarnacleRemoved();
+
+        Destroy(gameObject, 20f);
+    }
+    
+    public bool IsRemoved()
+    {
+        return removed;
     }
 }

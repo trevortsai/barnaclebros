@@ -41,12 +41,12 @@ public class Barnacle : MonoBehaviour
         if (rb != null)
         {
             rb.isKinematic = false;
-
-            rb.AddForce(Vector3.down * 3f, ForceMode.Impulse);
-
-            rb.AddTorque(Random.insideUnitSphere * 5f, ForceMode.Impulse);
+           // rb.useGravity = false;
+            rb.linearVelocity = Vector3.down * 0.5f;
+            rb.linearDamping = 2f;
+            rb.angularDamping = 2f;
         }
 
-        Destroy(gameObject, 10f);
+        Destroy(gameObject, 5f);
     }
 }

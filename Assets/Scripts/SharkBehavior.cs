@@ -22,6 +22,7 @@ public class SharkBehavior : MonoBehaviour
     private SharkState   _state = SharkState.Swimming;
     private SharkAnimator _anim;
     private CrabBehavior  _crab;
+    private DiverDeath    _diverDeath;
     private float         _retreatTimer;
 
     // ── lifecycle ────────────────────────────────────────────────────────
@@ -29,6 +30,7 @@ public class SharkBehavior : MonoBehaviour
     {
         _anim = GetComponent<SharkAnimator>();
         _crab = FindFirstObjectByType<CrabBehavior>();
+        _diverDeath = player != null ? player.GetComponent<DiverDeath>() : null;
         _anim.Loop(SharkAnimator.SWIM);
     }
 
@@ -49,6 +51,13 @@ public class SharkBehavior : MonoBehaviour
     {
         if (player == null) return;
 
+        // Diver already dead — just keep swimming, don't pursue
+        if (_diverDeath != null && _diverDeath.IsDead)
+        {
+            _anim.Loop(SharkAnimator.SWIM);
+            return;
+        }
+
         // Crab nearby → take hit, flee
         if (_crab != null &&
             Vector3.Distance(transform.position, _crab.transform.position) < crabDetectRange)
@@ -62,6 +71,7 @@ public class SharkBehavior : MonoBehaviour
         // Player in range → bite
         if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
+            _diverDeath?.TriggerDeath();   // trigger the diver's death sequence
             _state = SharkState.Attacking;
             _anim.Play(SharkAnimator.BITE);
             return;

@@ -14,51 +14,33 @@ public class SharkBehavior : MonoBehaviour
     public Vector3 rotationOffset = new Vector3(0f, 90f, 0f);
 
     [Header("Behaviour")]
-    public float attackRange     = 4f;   // distance to player that triggers Bite
-    public float crabDetectRange = 8f;   // distance to crab that triggers Hit + retreat
+    public float attackRange            = 4f;
+    public float crabDetectRange        = 8f;
     public float retreatArriveThreshold = 1.5f;
-    public float retreatDuration = 6f;
+    public float retreatDuration        = 6f;
 
-    // ── private state ────────────────────────────────────────────────────
-    private SharkState _state = SharkState.Swimming;
-    private Animator   _animator;
-    private CrabBehavior _crab;
-    private float _retreatTimer;
-    private string _currentAnim = "";
-
-    // Animation clip names (must match states in the Animator Controller)
-    private const string ANIM_SWIM   = "Swim Horizontal";
-    private const string ANIM_BITE   = "Bite";
-    private const string ANIM_HIT    = "Hit";
-    private const string ANIM_IDLE   = "Idle";
+    private SharkState   _state = SharkState.Swimming;
+    private SharkAnimator _anim;
+    private CrabBehavior  _crab;
+    private float         _retreatTimer;
 
     // ── lifecycle ────────────────────────────────────────────────────────
     void Start()
     {
-        _animator = GetComponentInChildren<Animator>();
-        _crab     = FindFirstObjectByType<CrabBehavior>();
-        PlayAnim(ANIM_SWIM);
+        _anim = GetComponent<SharkAnimator>();
+        _crab = FindFirstObjectByType<CrabBehavior>();
+        _anim.Loop(SharkAnimator.SWIM);
     }
 
     void Update()
     {
         switch (_state)
         {
-            case SharkState.Swimming:
-                TickSwimming();
-                break;
-            case SharkState.Attacking:
-                TickAttacking();
-                break;
-            case SharkState.Hit:
-                TickHit();
-                break;
-            case SharkState.Retreating:
-                TickRetreating();
-                break;
-            case SharkState.WaitingAtRetreat:
-                TickWaiting();
-                break;
+            case SharkState.Swimming:         TickSwimming();   break;
+            case SharkState.Attacking:        TickAttacking();  break;
+            case SharkState.Hit:              TickHit();        break;
+            case SharkState.Retreating:       TickRetreating(); break;
+            case SharkState.WaitingAtRetreat: TickWaiting();    break;
         }
     }
 
@@ -67,42 +49,43 @@ public class SharkBehavior : MonoBehaviour
     {
         if (player == null) return;
 
-        // Crab nearby → get hit, flee
-        if (_crab != null && Vector3.Distance(transform.position, _crab.transform.position) < crabDetectRange)
+        // Crab nearby → take hit, flee
+        if (_crab != null &&
+            Vector3.Distance(transform.position, _crab.transform.position) < crabDetectRange)
         {
             _crab.TriggerAttack();
-            EnterHit();
+            _state = SharkState.Hit;
+            _anim.Play(SharkAnimator.HIT);
             return;
         }
 
-        // Player in attack range → bite
+        // Player in range → bite
         if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
-            EnterAttack();
+            _state = SharkState.Attacking;
+            _anim.Play(SharkAnimator.BITE);
             return;
         }
 
         MoveToward(player.position, followSpeed);
-        LoopAnim(ANIM_SWIM);
+        _anim.Loop(SharkAnimator.SWIM);
     }
 
     void TickAttacking()
     {
-        // Wait for Bite clip to finish, then return to swimming
-        if (AnimFinished(ANIM_BITE))
+        if (_anim.IsFinished(SharkAnimator.BITE))
         {
             _state = SharkState.Swimming;
-            PlayAnim(ANIM_SWIM);
+            _anim.Loop(SharkAnimator.SWIM);
         }
     }
 
     void TickHit()
     {
-        // Wait for Hit clip to finish, then retreat
-        if (AnimFinished(ANIM_HIT))
+        if (_anim.IsFinished(SharkAnimator.HIT))
         {
             _state = SharkState.Retreating;
-            PlayAnim(ANIM_SWIM);
+            _anim.Loop(SharkAnimator.SWIM);
         }
     }
 
@@ -110,13 +93,13 @@ public class SharkBehavior : MonoBehaviour
     {
         if (retreatPoint == null) return;
         MoveToward(retreatPoint.position, retreatSpeed);
-        LoopAnim(ANIM_SWIM);
+        _anim.Loop(SharkAnimator.SWIM);
 
         if (Vector3.Distance(transform.position, retreatPoint.position) < retreatArriveThreshold)
         {
             _retreatTimer = retreatDuration;
             _state = SharkState.WaitingAtRetreat;
-            PlayAnim(ANIM_IDLE);
+            _anim.Play(SharkAnimator.IDLE);
         }
     }
 
@@ -127,49 +110,8 @@ public class SharkBehavior : MonoBehaviour
         {
             _crab?.StopAttack();
             _state = SharkState.Swimming;
-            PlayAnim(ANIM_SWIM);
+            _anim.Loop(SharkAnimator.SWIM);
         }
-    }
-
-    // ── state transitions ────────────────────────────────────────────────
-    void EnterAttack()
-    {
-        _state = SharkState.Attacking;
-        PlayAnim(ANIM_BITE);
-    }
-
-    void EnterHit()
-    {
-        _state = SharkState.Hit;
-        PlayAnim(ANIM_HIT);
-    }
-
-    // ── animation helpers ────────────────────────────────────────────────
-
-    // Play a state only when it differs from the currently playing one
-    void PlayAnim(string animName)
-    {
-        if (_currentAnim == animName) return;
-        _currentAnim = animName;
-        _animator?.Play(animName, 0, 0f);
-    }
-
-    // Restart an animation when it reaches the end (manual looping)
-    void LoopAnim(string animName)
-    {
-        PlayAnim(animName);
-        if (_animator == null) return;
-        AnimatorStateInfo info = _animator.GetCurrentAnimatorStateInfo(0);
-        if (info.IsName(animName) && info.normalizedTime >= 1f)
-            _animator.Play(animName, 0, 0f);
-    }
-
-    // Returns true once the named clip has played through
-    bool AnimFinished(string animName)
-    {
-        if (_animator == null) return true;
-        AnimatorStateInfo info = _animator.GetCurrentAnimatorStateInfo(0);
-        return info.IsName(animName) && info.normalizedTime >= 1f;
     }
 
     // ── movement ─────────────────────────────────────────────────────────

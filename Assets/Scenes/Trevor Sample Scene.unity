@@ -6817,7 +6817,7 @@ MonoBehaviour:
   retreatSpeed: 6
   rotationOffset: {x: 0, y: 0, z: 0}
   attackRange: 4
-  crabDetectRange: 2
+  crabDetectRange: 5
   retreatArriveThreshold: 1.5
   retreatDuration: 6
 --- !u!114 &717907352

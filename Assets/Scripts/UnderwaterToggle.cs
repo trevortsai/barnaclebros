@@ -16,6 +16,9 @@ public class UnderwaterToggle : MonoBehaviour
     [Tooltip("The solid color the camera will show when looking into the deep water.")]
     public Color underwaterBackgroundColor = new Color(0.1f, 0.4f, 0.7f); // A nice deep blue
 
+    [Tooltip("If true, keep the skybox visible underwater (sky shows through the water surface) instead of an opaque background color.")]
+    public bool showSkyboxUnderwater = false;
+
     private Camera cam;
     private bool wasUnderwater; // Tracks state to prevent running code every single frame
 
@@ -61,7 +64,9 @@ public class UnderwaterToggle : MonoBehaviour
         // 3. Switch Camera Background between Solid Color and Skybox
         if (cam != null)
         {
-            if (isUnderwater)
+            // When showSkyboxUnderwater is on, keep the skybox so the sky stays
+            // visible through the water surface instead of an opaque color.
+            if (isUnderwater && !showSkyboxUnderwater)
             {
                 cam.clearFlags = CameraClearFlags.SolidColor;
                 cam.backgroundColor = underwaterBackgroundColor;

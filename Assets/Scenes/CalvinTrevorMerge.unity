@@ -8864,7 +8864,7 @@ MonoBehaviour:
   moveSpeed: 6
   verticalSpeed: 1.5
   smoothTime: 0.25
-  waterSurface: {fileID: 0}
+  waterSurface: {fileID: 326512111}
   surfaceOffset: -0.7
 --- !u!143 &2094360165
 CharacterController:

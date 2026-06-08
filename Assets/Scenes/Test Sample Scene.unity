@@ -7791,16 +7791,28 @@ PrefabInstance:
       value: Creature_Crab
       objectReference: {fileID: 0}
     - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.2097
+      objectReference: {fileID: 0}
+    - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.2097
+      objectReference: {fileID: 0}
+    - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.2097
+      objectReference: {fileID: 0}
+    - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 5.0454
       objectReference: {fileID: 0}
     - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -4.96
       objectReference: {fileID: 0}
     - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 4.8452
       objectReference: {fileID: 0}
     - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8663,7 +8675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ed5b053f0054c30bd949546bfd2065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3.5
+  moveSpeed: 6
   verticalSpeed: 1.5
   smoothTime: 0.25
 --- !u!143 &2094360165

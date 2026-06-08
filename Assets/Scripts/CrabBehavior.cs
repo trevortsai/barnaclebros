@@ -23,6 +23,7 @@ public class CrabBehavior : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _homePosition = transform.position;
         PickWaypoint();
+        _animator?.Play("Walk");
     }
 
     void Update()
@@ -48,6 +49,14 @@ public class CrabBehavior : MonoBehaviour
         }
 
         WalkToWaypoint();
+
+        // Walk clip doesn't have Loop Time enabled in the FBX import, so restart it manually when it ends
+        if (_animator != null)
+        {
+            AnimatorStateInfo info = _animator.GetCurrentAnimatorStateInfo(0);
+            if (info.IsName("Walk") && info.normalizedTime >= 1.0f)
+                _animator.Play("Walk", 0, 0f);
+        }
     }
 
     void WalkToWaypoint()

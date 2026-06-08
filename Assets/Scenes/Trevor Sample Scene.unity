@@ -6817,7 +6817,7 @@ MonoBehaviour:
   retreatSpeed: 6
   rotationOffset: {x: 0, y: 0, z: 0}
   attackRange: 4
-  crabDetectRange: 8
+  crabDetectRange: 2
   retreatArriveThreshold: 1.5
   retreatDuration: 6
 --- !u!114 &717907352
@@ -6867,16 +6867,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 2080542151}
     m_Modifications:
     - target: {fileID: -3970243614316841892, guid: 401dbf06c8b0249ab883ca136c3a52f5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4664656
+      objectReference: {fileID: 0}
+    - target: {fileID: -3970243614316841892, guid: 401dbf06c8b0249ab883ca136c3a52f5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.4664656
+      objectReference: {fileID: 0}
+    - target: {fileID: -3970243614316841892, guid: 401dbf06c8b0249ab883ca136c3a52f5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.4664656
+      objectReference: {fileID: 0}
+    - target: {fileID: -3970243614316841892, guid: 401dbf06c8b0249ab883ca136c3a52f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.30854
+      value: 7.3059
       objectReference: {fileID: 0}
     - target: {fileID: -3970243614316841892, guid: 401dbf06c8b0249ab883ca136c3a52f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.18
+      value: -4.2845
       objectReference: {fileID: 0}
     - target: {fileID: -3970243614316841892, guid: 401dbf06c8b0249ab883ca136c3a52f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.09
+      value: -2.6303
       objectReference: {fileID: 0}
     - target: {fileID: -3970243614316841892, guid: 401dbf06c8b0249ab883ca136c3a52f5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7425,6 +7437,7 @@ MonoBehaviour:
   underwaterEffects: {fileID: 0}
   surfaceOffset: 0
   underwaterBackgroundColor: {r: 0.1, g: 0.4, b: 0.7, a: 1}
+  showSkyboxUnderwater: 0
 --- !u!1 &1002981791
 GameObject:
   m_ObjectHideFlags: 0
@@ -8711,6 +8724,8 @@ MonoBehaviour:
   moveSpeed: 6
   verticalSpeed: 1.5
   smoothTime: 0.25
+  waterSurface: {fileID: 0}
+  surfaceOffset: -0.7
 --- !u!143 &2094360165
 CharacterController:
   m_ObjectHideFlags: 0

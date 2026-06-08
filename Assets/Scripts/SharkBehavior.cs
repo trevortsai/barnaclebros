@@ -118,7 +118,6 @@ public class SharkBehavior : MonoBehaviour
     void MoveToward(Vector3 target, float speed)
     {
         Vector3 dir = target - transform.position;
-        dir.y = 0f;
         if (dir.sqrMagnitude < 0.01f) return;
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;

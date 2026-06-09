@@ -27,6 +27,9 @@ public class DiverDeath : MonoBehaviour
     [Tooltip("Linear drag applied to the Rigidbody — simulates water resistance.")]
     public float sinkDrag        = 2.5f;
     public float sinkAngularDrag = 4f;
+    [Tooltip("Gravity scale applied to the Rigidbody when sinking (1 = full gravity, " +
+             "0.25 = slow underwater drift). Lower values make the diver float down gently.")]
+    public float sinkGravityScale = 0.25f;
     [Tooltip("Extra pause (seconds) between knockback clip ending and sinking.")]
     public float sinkDelay       = 0.08f;
 
@@ -38,6 +41,7 @@ public class DiverDeath : MonoBehaviour
     private SkinnedMeshRenderer[]  _smrs;
     private Transform              _camTransform;
     private MouseLook              _mouseLook;
+    private Rigidbody              _sinkRb;        // set after death, used by gravity coroutine
 
     // ─────────────────────────────────────────────────────────────────
     void Start()
@@ -88,10 +92,17 @@ public class DiverDeath : MonoBehaviour
     // ── death sequence coroutine ─────────────────────────────────────
     IEnumerator DeathSequence()
     {
-        // 1. Freeze player controls ───────────────────────────────────
+        // 1. Freeze player controls & hide viewmodel ─────────────────
         var movement = GetComponent<DiverMovement>();
         if (movement) movement.enabled = false;
         if (_mouseLook) _mouseLook.enabled = false;
+
+        // Hide the putty-knife viewmodel (child of Main Camera)
+        if (_camTransform != null)
+        {
+            Transform knife = _camTransform.Find("Putty Knife");
+            if (knife != null) knife.gameObject.SetActive(false);
+        }
 
         // 2. Reveal the body mesh (camera is about to pull back) ──────
         SetRenderersEnabled(true);
@@ -149,8 +160,11 @@ public class DiverDeath : MonoBehaviour
         if (rb == null) rb = gameObject.AddComponent<Rigidbody>();
         rb.linearDamping  = sinkDrag;
         rb.angularDamping = sinkAngularDrag;
-        rb.useGravity     = true;
+        // useGravity is kept OFF so we can apply a scaled fraction of gravity manually.
+        // ForceMode.Acceleration bypasses mass and mirrors exactly how built-in gravity works.
+        rb.useGravity     = false;
         rb.AddTorque(transform.right * 1.8f - transform.up * 0.4f, ForceMode.Impulse);
+        _sinkRb = rb;
 
         // 7. Camera softly tracks the sinking body ────────────────────
         if (_camTransform != null)
@@ -161,6 +175,11 @@ public class DiverDeath : MonoBehaviour
     {
         while (_camTransform != null)
         {
+            // Apply scaled gravity manually (useGravity is off so we control the rate).
+            // ForceMode.Acceleration is mass-independent — identical to built-in gravity.
+            if (_sinkRb != null)
+                _sinkRb.AddForce(Physics.gravity * sinkGravityScale, ForceMode.Acceleration);
+
             Vector3 desired = transform.position
                             - transform.forward * camOffsetBack
                             + Vector3.up        * camOffsetUp;

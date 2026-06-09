@@ -38,12 +38,12 @@ public class Barnacle : MonoBehaviour
 
         GameManager.instance.BarnacleRemoved();
 
+        Rigidbody rb = GetComponent<Rigidbody>();
+
         if (rb != null)
         {
             rb.isKinematic = false;
-
             rb.AddForce(Vector3.down * 3f, ForceMode.Impulse);
-
             rb.AddTorque(Random.insideUnitSphere * 5f, ForceMode.Impulse);
         }
 

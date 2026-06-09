@@ -62,7 +62,7 @@ public class SharkBehavior : MonoBehaviour
         if (_crab != null &&
             Vector3.Distance(transform.position, _crab.transform.position) < crabDetectRange)
         {
-            _crab.TriggerAttack();
+            _crab.TriggerAttack(transform);
             _state = SharkState.Hit;
             _anim.Play(SharkAnimator.HIT);
             return;

@@ -35,12 +35,13 @@ public class CrabBehavior : MonoBehaviour
     private Animator  _animator;
     private Rigidbody _rb;
 
-    private Vector3 _homePosition;
-    private Vector3 _waypoint;
-    private float   _idleTimer;
-    private bool    _isIdle;
-    private bool    _isAttacking;
-    private float   _attackTimer;
+    private Vector3    _homePosition;
+    private Vector3    _waypoint;
+    private float      _idleTimer;
+    private bool       _isIdle;
+    private bool       _isAttacking;
+    private float      _attackTimer;
+    private Transform  _attackTarget;   // who to face while attacking
 
     // desired XZ unit direction — written in Update, consumed in FixedUpdate
     private Vector3 _moveDir;
@@ -63,6 +64,20 @@ public class CrabBehavior : MonoBehaviour
         if (_isAttacking)
         {
             _moveDir = Vector3.zero;
+
+            // Continuously face the attacker (Y-axis only)
+            if (_attackTarget != null)
+            {
+                Vector3 toTarget = _attackTarget.position - transform.position;
+                toTarget.y = 0f;
+                if (toTarget.sqrMagnitude > 0.001f)
+                {
+                    Quaternion targetRot = Quaternion.LookRotation(toTarget);
+                    transform.rotation = Quaternion.Slerp(
+                        transform.rotation, targetRot, 8f * Time.deltaTime);
+                }
+            }
+
             _attackTimer -= Time.deltaTime;
             if (_attackTimer <= 0f) EndAttack();
             return;
@@ -165,7 +180,11 @@ public class CrabBehavior : MonoBehaviour
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
         foreach (RaycastHit h in hits)
-            if (h.collider.gameObject != gameObject) return h.point.y;
+        {
+            if (h.collider.gameObject == gameObject) continue;   // skip self
+            if (h.point.y > pos.y + 0.5f)           continue;   // skip surfaces above the crab (boat hull, etc.)
+            return h.point.y;
+        }
 
         return float.MinValue;   // no terrain found (should not happen in normal gameplay)
     }
@@ -177,27 +196,33 @@ public class CrabBehavior : MonoBehaviour
         float wx = _homePosition.x + rand.x;
         float wz = _homePosition.z + rand.y;
 
-        // Cast downward from well above the candidate XZ to find the terrain surface
+        // Cast downward from well above the candidate XZ to find the sea-floor surface.
+        // Use RaycastAll and skip any hit that is above the home position (boat hull, etc.).
         Vector3 rayOrigin = new Vector3(wx, _homePosition.y + 100f, wz);
-        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 300f,
-                            Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+        RaycastHit[] hits = Physics.RaycastAll(rayOrigin, Vector3.down, 300f,
+                                               Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        bool found = false;
+        foreach (RaycastHit h in hits)
         {
-            _waypoint = hit.point;
+            if (h.point.y > _homePosition.y + 0.5f) continue;   // skip surfaces above sea floor (boat, etc.)
+            _waypoint = h.point;
+            found = true;
+            break;
         }
-        else
-        {
-            // Fallback: flat at home Y (shouldn't happen if terrain covers the area)
-            _waypoint = new Vector3(wx, _homePosition.y, wz);
-        }
+        if (!found)
+            _waypoint = new Vector3(wx, _homePosition.y, wz);   // fallback
     }
 
     // ── Public API (called by SharkBehavior) ─────────────────────────
-    public void TriggerAttack()
+    public void TriggerAttack(Transform attacker = null)
     {
         if (_isAttacking) return;
-        _isAttacking = true;
-        _attackTimer = attackDuration;
-        _moveDir     = Vector3.zero;
+        _isAttacking  = true;
+        _attackTimer  = attackDuration;
+        _attackTarget = attacker;
+        _moveDir      = Vector3.zero;
         _animator?.Play("Attack");
     }
 
@@ -206,8 +231,9 @@ public class CrabBehavior : MonoBehaviour
     // ── Internals ────────────────────────────────────────────────────
     void EndAttack()
     {
-        _isAttacking = false;
-        _isIdle      = false;
+        _isAttacking  = false;
+        _isIdle       = false;
+        _attackTarget = null;
         PickWaypoint();
         _animator?.Play("Walk");
     }

@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     private int totalBarnacles;
     private int removedBarnacles = 0;
 
+    public int RemovedBarnacles => removedBarnacles;
+    public int TotalBarnacles => totalBarnacles;
+
     public Slider progressBar;
     public GameObject winScreen;
 

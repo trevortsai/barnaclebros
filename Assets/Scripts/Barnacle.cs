@@ -51,6 +51,7 @@ public class Barnacle : MonoBehaviour
 
     public void PopOff()
     {
+        if (removed) return;   // already scraped — no double points
         removed = true;
 
         GameManager.instance.BarnacleRemoved();

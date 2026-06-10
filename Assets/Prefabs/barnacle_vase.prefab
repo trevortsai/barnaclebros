@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ddfa1bc72314acf9f2e1ce007c5073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Barnacle
-  scrapeNeeded: 3
+  scrapeNeeded: 1
   sinkAcceleration: 1.2
   waterDrag: 1.8
   waterAngularDrag: 0.8
@@ -72,8 +72,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 150
+  m_Center: {x: -100, y: 150, z: -100}
 --- !u!54 &6004074757044246586
 Rigidbody:
   m_ObjectHideFlags: 0

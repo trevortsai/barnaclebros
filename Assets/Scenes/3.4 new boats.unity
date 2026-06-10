@@ -37795,6 +37795,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 842933342}
     m_Modifications:
+    - target: {fileID: 1599317259268421289, guid: 4300fc3460c15413ab6f491d5512e536, type: 3}
+      propertyPath: m_Radius
+      value: 121.94703
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599317259268421289, guid: 4300fc3460c15413ab6f491d5512e536, type: 3}
+      propertyPath: m_Center.x
+      value: 0.00000047980615
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599317259268421289, guid: 4300fc3460c15413ab6f491d5512e536, type: 3}
+      propertyPath: m_Center.y
+      value: 21.94692
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599317259268421289, guid: 4300fc3460c15413ab6f491d5512e536, type: 3}
+      propertyPath: m_Center.z
+      value: 0.0000011697762
+      objectReference: {fileID: 0}
     - target: {fileID: 6410802413962722361, guid: 4300fc3460c15413ab6f491d5512e536, type: 3}
       propertyPath: m_Name
       value: barnacle_vase

@@ -6305,7 +6305,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: You Died
+  m_Text: You were eaten by Shark.
 --- !u!222 &844926539
 CanvasRenderer:
   m_ObjectHideFlags: 0

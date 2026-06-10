@@ -45,10 +45,9 @@ public class BarnSpaw : MonoBehaviour
                     if (hit.point.y <= waterLevelY)
                     {
                         // 4. Align the barnacle to the surface of the boat
-                        // This assumes the "Up" (Y-axis) of your barnacle model points outward.
                         Quaternion surfaceRotation = Quaternion.FromToRotation(Vector3.forward, hit.normal);
 
-                        Vector3 sunkenPosition = hit.point - (hit.normal * 0.05f);
+                        Vector3 sunkenPosition = hit.point - (hit.normal * 0.02f);
 
                         // 5. Spawn the barnacle using the new sunken position
                         GameObject newBarnacle = Instantiate(barnaclePrefab, sunkenPosition, surfaceRotation);

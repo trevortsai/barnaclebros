@@ -18,6 +18,7 @@ public class Scraper : MonoBehaviour
                 if (barnacle != null)
                 {
                     barnacle.Scrape(scrapeSpeed * Time.deltaTime);
+                    AudioManager.instance?.NotifyScraping();   // loops scrape SFX while scraping
                 }
             }
         }

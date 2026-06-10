@@ -71,6 +71,7 @@ public class SharkBehavior : MonoBehaviour
         // Player in range → bite
         if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
+            AudioManager.instance?.PlayChomp();   // cartoon chomp on bite
             _diverDeath?.TriggerDeath();   // trigger the diver's death sequence
             _state = SharkState.Attacking;
             _anim.Play(SharkAnimator.BITE);

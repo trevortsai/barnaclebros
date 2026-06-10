@@ -224,6 +224,7 @@ public class CrabBehavior : MonoBehaviour
         _attackTarget = attacker;
         _moveDir      = Vector3.zero;
         _animator?.Play("Attack");
+        AudioManager.instance?.PlayCrabAttack();   // crab attack SFX
     }
 
     public void StopAttack() => EndAttack();

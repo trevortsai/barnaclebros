@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     void WinGame()
     {
         HasWon = true;
+        AudioManager.instance?.PlayWin();   // win jingle
         if (winScreen != null) winScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
     }

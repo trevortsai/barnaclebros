@@ -34226,7 +34226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SharkBehavior
   player: {fileID: 2094360169}
   retreatPoint: {fileID: 1002981792}
-  followSpeed: 5
+  followSpeed: 4
   retreatSpeed: 6
   rotationOffset: {x: 0, y: 0, z: 0}
   attackRange: 4
@@ -85709,6 +85709,60 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8f12c756c4f14e3fb266e3496640da8, type: 3}
+--- !u!1 &1900000000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1900000001}
+  - component: {fileID: 1900000002}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1900000001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900000000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1900000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4349a024250d14e1a92f573fcf1a9886, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  ambientLoop: {fileID: 8300000, guid: aa1427289314540f6aedd1afb77d00a0, type: 3}
+  chompClip: {fileID: 8300000, guid: c99215c5190914e608154877c57695d5, type: 3}
+  winClip: {fileID: 8300000, guid: 2aa87f71bc3b045d48e278f0cf793307, type: 3}
+  scrapeLoop: {fileID: 8300000, guid: c61fee8aa5b344443ad45d33165c2cd4, type: 3}
+  crabAttackClip: {fileID: 8300000, guid: fe6796beeb98c4b7bb063f13c34d8468, type: 3}
+  ambientVolume: 0.45
+  chompVolume: 1
+  winVolume: 1
+  scrapeVolume: 0.35
+  crabAttackVolume: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -85719,4 +85773,5 @@ SceneRoots:
   - {fileID: 1655838456}
   - {fileID: 701669092}
   - {fileID: 1076196428}
+  - {fileID: 1900000001}
   - {fileID: 2048882441}

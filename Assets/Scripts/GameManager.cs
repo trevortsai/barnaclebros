@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
     private int totalBarnacles;
     private int removedBarnacles = 0;
 
+    public int RemovedBarnacles => removedBarnacles;
+    public int TotalBarnacles => totalBarnacles;
+    public bool HasWon { get; private set; }
+
     public Slider progressBar;
     public GameObject winScreen;
 
@@ -26,7 +30,7 @@ public class GameManager : MonoBehaviour
         progressBar.maxValue = totalBarnacles;
         progressBar.value = 0;
 
-        winScreen.SetActive(false);
+        if (winScreen != null) winScreen.SetActive(false);
     }
 
     public void BarnacleRemoved()
@@ -43,7 +47,8 @@ public class GameManager : MonoBehaviour
 
     void WinGame()
     {
-        winScreen.SetActive(true);
+        HasWon = true;
+        if (winScreen != null) winScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
     }
 }

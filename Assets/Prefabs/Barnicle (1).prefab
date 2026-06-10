@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9145135264657370006}
   - component: {fileID: 548255407573005513}
   - component: {fileID: 4627298597660570693}
+  - component: {fileID: 6513562950321913517}
   m_Layer: 0
   m_Name: Barnicle (1)
   m_TagString: Untagged
@@ -48,6 +49,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Barnacle
   scrapeNeeded: 1
+  sinkAcceleration: 1.2
+  waterDrag: 1.8
+  waterAngularDrag: 0.8
+  tumbleStrength: 1.2
+  lifetime: 12
 --- !u!135 &548255407573005513
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -96,6 +102,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6513562950321913517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3633218712335430691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a101bfbfbb71a5b468def68d4f528c86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BarnSpaw
+  barnaclePrefab: {fileID: 0}
+  boatTransform: {fileID: 0}
+  boatCollider: {fileID: 0}
+  raycastStartDistance: 10
+  barnaclesToSpawn: 20
+  waterLevelY: 0
 --- !u!1 &5757292245043465466
 GameObject:
   m_ObjectHideFlags: 0

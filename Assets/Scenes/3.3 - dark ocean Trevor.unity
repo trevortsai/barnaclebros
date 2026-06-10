@@ -9363,7 +9363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3097349ae74c4b63bd6cdbbfce8e963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathScreen
-  diver: {fileID: 0}
+  diver: {fileID: 300000003}
   canvasGroup: {fileID: 1857380703}
   barnaclesText: {fileID: 2131394827}
   fadeDelay: 1.5
@@ -9435,8 +9435,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17d6153b233a47498f7247b4e4fbd56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SharkProximityWarning
-  shark: {fileID: 0}
-  player: {fileID: 0}
+  shark: {fileID: 717907350}
+  player: {fileID: 2094360169}
   warningGroup: {fileID: 1951919509}
   warningDistance: 30
   pulseSpeed: 3

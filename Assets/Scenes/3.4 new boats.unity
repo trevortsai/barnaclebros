@@ -40614,7 +40614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f19f3c925464f089579f608dece9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrapeDistance: 15
+  scrapeDistance: 30
   scrapeSpeed: 4
 --- !u!114 &963194231
 MonoBehaviour:

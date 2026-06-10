@@ -6354,7 +6354,7 @@ MonoBehaviour:
   retreatSpeed: 6
   rotationOffset: {x: 0, y: 0, z: 0}
   attackRange: 4
-  crabDetectRange: 5
+  crabDetectRange: 8
   retreatArriveThreshold: 1.5
   retreatDuration: 6
 --- !u!114 &717907352
@@ -8028,15 +8028,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.0874
+      value: 11.73
       objectReference: {fileID: 0}
     - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.83
+      value: -13.58
       objectReference: {fileID: 0}
     - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25.289
+      value: 23.58
       objectReference: {fileID: 0}
     - target: {fileID: 483740, guid: d8d4d2c4e22d5294abe74dcb24776383, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8096,8 +8096,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a71a2a18a4634551b6f6d04471b9db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrabBehavior
-  walkSpeed: 2
-  wanderRadius: 50
+  walkSpeed: 5
+  wanderRadius: 20
   idleTimeAtWaypoint: 2
   arrivalDistance: 0.5
   attackDuration: 3
